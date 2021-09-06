@@ -1,6 +1,6 @@
 # language: pt
 
-@BrokerContratar
+@2002
 Funcionalidade: Testar Pagamento com contratação assinada pelo Broker
 
   Esquema do Cenário: Simulação de pagamento com assinatura de contratação

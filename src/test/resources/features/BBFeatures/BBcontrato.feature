@@ -1,6 +1,6 @@
 # language: pt
 
-@BBContratar
+@1002
 Funcionalidade: Testar Pagamento com contratação assinada
 
     Esquema do Cenário: Simulação de pagamento com assinatura do  Banco do Brasil

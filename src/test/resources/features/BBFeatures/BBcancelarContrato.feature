@@ -1,6 +1,6 @@
 # language: pt
 
-@BBcancelar
+@1001
 Funcionalidade: Testar Pagamento com contratação assinada
 
   Esquema do Cenário: Simulação de pagamento porem cancelando a contratação do Banco do Brasil
