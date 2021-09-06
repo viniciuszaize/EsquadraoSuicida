@@ -1,0 +1,2 @@
+# EsquadraoSuicida
+repositório do squad
