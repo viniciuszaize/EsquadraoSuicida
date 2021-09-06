@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "required": [
+    "id",
+    "code",
+    "status",
+    "company",
+    "printedProposal",
+    "max_card_pme"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "The id schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "code": {
+      "type": "integer",
+      "title": "The code schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "title": "The status schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    },
+    "company": {
+      "type": "object",
+      "title": "The company schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": {},
+      "required": [
+        "document",
+        "businessName"
+      ],
+      "properties": {
+        "document": {
+          "type": "string",
+          "title": "The document schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "pattern": "[0-9]"
+        },
+        "businessName": {
+          "type": "string",
+          "title": "The businessName schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": ""
+        }
+      },
+      "additionalProperties": true
+    },
+    "printedProposal": {
+      "type": "boolean",
+      "title": "The printedProposal schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": false
+    },
+    "max_card_pme": {
+      "type": "string",
+      "title": "The max_card_pme schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": ""
+    }
+  },
+  "additionalProperties": true
+}

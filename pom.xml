@@ -1,0 +1,149 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>br.com.alelo.qa</groupId>
+    <artifactId>api-sample</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+    <name>ApiSample</name>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.version>3.3</maven.compiler.version>
+        <javafaker.version>1.0.2</javafaker.version>
+    </properties>
+
+    <!--     Inicio das configurações de repositórios do Nexus-->
+    <repositories>
+        <repository>
+            <id>maven-central</id>
+            <url>https://nexus-cicd-tools.sao.siteteste.inf.br/repository/maven-releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>maven-snapshots</id>
+            <url>https://nexus-cicd-tools.sao.siteteste.inf.br/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>maven-releases</id>
+            <url>https://nexus-cicd-tools.sao.siteteste.inf.br/repository/maven-releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven-central</id>
+            <url>https://nexus-cicd-tools.sao.siteteste.inf.br/repository/maven-central//</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>https://nexus-cicd-tools.sao.siteteste.inf.br/repository/maven-snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus-releases</id>
+            <url>https://nexus-cicd-tools.sao.siteteste.inf.br/repository/maven-releases</url>
+        </repository>
+    </distributionManagement>
+    <!--     Fim das configurações de repositórios do Nexus-->
+
+    <dependencies>
+
+
+        <!--                        Plugin Alelo - Integracao Teams-->
+        <dependency>
+            <groupId>br.com.alelo.qa.cucumber</groupId>
+            <artifactId>plugin-teams</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!--        Plugin Alelo - Integracao com Azure-->
+        <dependency>
+            <groupId>br.com.alelo.qa.cucumber</groupId>
+            <artifactId>plugin-azure</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!--        Dependencia do Cucumber-->
+        <dependency>
+            <groupId>br.com.alelo.qa.cucumber</groupId>
+            <artifactId>cucumber-test</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>br.com.alelo.qa</groupId>
+            <artifactId>alelo-assured</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.trivago.rta</groupId>
+                <artifactId>cluecumber-report-plugin</artifactId>
+                <version>2.3.4</version>
+                <executions>
+                    <execution>
+                        <id>report</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>reporting</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceJsonReportDirectory>${project.build.directory}/cluecumber-report/json
+                    </sourceJsonReportDirectory>
+                    <generatedHtmlReportDirectory>${project.build.directory}/cluecumber-report
+                    </generatedHtmlReportDirectory>
+                    <customPageTitle>Relatorio de execucao</customPageTitle>
+                    <expandBeforeAfterHooks>true</expandBeforeAfterHooks>
+                    <expandStepHooks>true</expandStepHooks>
+                    <expandDocStrings>true</expandDocStrings>
+                    <customParameters>
+                        <Projeto>Teste</Projeto>
+                    </customParameters>
+                    <customCss>${project.basedir}/src/test/resources/custom/custom.css</customCss>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

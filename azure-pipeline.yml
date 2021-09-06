@@ -1,0 +1,68 @@
+parameters:
+  - name: cucumberTag
+    displayName: Tags do cucumber
+    type: string
+    default: ' '
+  - name: threadsNumber
+    displayName: Numero de Threads
+    type: number
+    default: 3
+    values:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+
+variables:
+  BUILDID: $(Build.BuildId)
+  TEAMPROJECT: $(System.TeamProject)
+
+stages:
+  - stage: build
+    jobs:
+      - job: build
+        workspace:
+          clean: all
+        #    pool: 'adquirencia-testes'
+        #                OU
+        pool: 'AWSAgent_Windows'
+        steps:
+          #          - script: sleep 1m
+          - script: /usr/share/maven/bin/mvn clean verify -Dcucumber.filter.tags="${{ parameters.cucumberTag }}" -Ddataproviderthreadcount=${{ parameters.threadsNumber }}
+          - task: CopyFiles@2
+            inputs:
+              sourceFolder: 'target/cluecumber-report/'
+              contents: '**'
+              targetFolder: $(Build.ArtifactStagingDirectory)
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '*.xml'
+              searchFolder: 'target/'
+              testRunTitle: 'Testes Automatizados'
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '12.16.2'
+          - task: PublishCucumberReport@1
+            inputs:
+              jsonDir: 'target/cluecumber-report/json/'
+              outputPath: 'target/'
+              theme: 'bootstrap'
+              reportSuiteAsScenarios: true
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathToPublish: $(Build.ArtifactStagingDirectory)
+              artifactName: Reports
+#          - task: SendEmail@0
+#            inputs:
+#              To: 'exemplo.exemplo@alelo.com.br'
+#              From: 'exemplo.exemplo@alelo.com.br'
+#              Subject: 'Report'
+#              Body: https://dev.azure.com/adquirencia/NOMEDOTIME/_apis/build/builds/$(Build.BuildId)/artifacts?artifactName=Reports
+#              SmtpServer: ''
+#              SmtpPort: '465'
+#              SmtpUsername: ''
+#              SmtpPassword: ''
+#              UseSSL: true
